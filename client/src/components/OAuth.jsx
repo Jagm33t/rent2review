@@ -1,20 +1,43 @@
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
-import { useNavigate } from 'react-router-dom';
-
-
+import { useNavigate} from 'react-router-dom';
+import { useEffect } from 'react';
 const OAuth = () => {
   const dispatch = useDispatch();
-const Navigate = useNavigate();
+  const Navigate = useNavigate();
+
+  // Add an observer to check authentication state
+  useEffect(() => {
+    const auth = getAuth(app);
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        // You can dispatch an action or perform other actions as needed
+        console.log("User is signed in:", user);
+      } else {
+        // User is signed out
+        console.log("User is signed out");
+      }
+    });
+
+    return () => {
+      // Unsubscribe the observer when the component unmounts
+      unsubscribe();
+    };
+  }, []); // Empty dependency array ensures it runs once on component mount
+
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth, provider);
-console.log("result",result)
+      console.log("result", result);
+
+      // Continue with your existing code for fetching data and dispatching actions
       const res = await fetch('api/auth/google', {
         method: 'POST',
         headers: {
@@ -26,9 +49,10 @@ console.log("result",result)
           photo: result.user.photoURL,
         }),
       });
-      const data = await res.json()
-     dispatch(signInSuccess(data));
-    Navigate('/');
+
+      const data = await res.json();
+      dispatch(signInSuccess(data));
+      Navigate('/');
     } catch (error) {
       console.log("Couldn't sign in with Google", error);
     }
