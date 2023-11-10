@@ -4,12 +4,16 @@ import User from '../models/user.model.js';
 
 export const test =(req,res)=>{
   res.json({
-    message: "Hello wworld"
+    message: 'Api route is working!',
   });
 }
 
 export const updateUser = async(req, res, next)=>{
+  console.log("params",req.params.id)
+  console.log(req.user)
   if(req.user.id !== req.params.id) return next(errorHandler(401, "You can only update own account"))
+  
+  //if user want to update password then hash it.
   try{
 if(req.body.password){
   req.body.password = bcryptjs.hashSync(req.body.password, 10)
