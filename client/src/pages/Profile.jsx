@@ -124,7 +124,6 @@ const Profile = () => {
         return;
       }
       dispatch(deleteUserSuccess(data));
-      navigate('/signin'); 
     } catch (error) {
       dispatch(deleteUserFailure(data.message));
     }

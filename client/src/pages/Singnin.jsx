@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
 import OAuth from '../components/OAuth';
 
-const Signin = () => {
+const SignIn = () => {
 
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
@@ -36,7 +36,7 @@ const Signin = () => {
     return;
   }
   dispatch(signInSuccess(data));
-  navigate('/');
+  navigate('/profile');
     }catch (error){
     dispatch(signInFailure(error.message));
     }
@@ -70,4 +70,4 @@ const Signin = () => {
   )
 }
 
-export default Signin;
+export default SignIn;
