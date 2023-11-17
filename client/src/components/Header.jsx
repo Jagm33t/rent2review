@@ -3,6 +3,8 @@ import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
+
+
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,12 +26,15 @@ const Header = () => {
   }, [location.search]);
 
   return (
-    <header className='bg-slate-200 shadow-md'>
+    <header className='bg-white shadow-md'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
       <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
       <Link to='/'>
-        <span className='text-slate-500'>Locale</span>
-        <span className='text-slate-700'>Estate</span>
+
+      <span className='text-blue-500'>Rental</span>
+<span className='text-black-400'>Hub</span>
+
+
         </Link>
       </h1>
       <form onSubmit={handleSubmit}  className='bg-slate-100 p-3 rounded-lg flex items-center'>

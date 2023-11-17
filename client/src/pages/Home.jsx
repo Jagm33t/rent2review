@@ -50,15 +50,27 @@ export default function Home() {
       {/* top */}
       <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto'>
         <h1 className='text-slate-700 font-bold text-3xl lg:text-6xl'>
-          Find your next <span className='text-slate-500'>perfect</span>
+        <span className='text-green-500'>Connect</span> , Share, and Thrive: Elevating Rental Experiences for <span className='text-blue-500'>Tenants</span> and <span className='text-blue-500'>Landlords</span>
           <br />
-          place with ease
+       
         </h1>
-        <div className='text-gray-400 text-xs sm:text-sm'>
-        LocaleEstate is the best place to find your next perfect place to
-          live.
-          <br />
-          We have a wide range of properties for you to choose from.
+        <div className='text-black-500 text-xs sm:text-sm'>
+        RentalHub serves as a dedicated community hub where both tenants and landlords can openly share and access genuine reviews.
+          
+          
+
+        </div>
+        <div className='flex flex-row gap-5'>
+        <button class="w-[150px] bg-blue-500 h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0 text-[#fff]">
+  Read Review
+</button>
+<button class="w-[150px] bg-blue-500 h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0 text-[#fff]">
+ Submit Review
+</button>
+<button class="w-[150px] bg-blue-500 h-[50px] my-3 flex items-center justify-center rounded-xl cursor-pointer relative overflow-hidden transition-all duration-500 ease-in-out shadow-md hover:scale-105 hover:shadow-lg before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-[#009b49] before:to-[rgb(105,184,141)] before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-xl hover:before:left-0 text-[#fff]">
+  View Listings
+</button>
+
         </div>
         <Link
           to={'/search'}
