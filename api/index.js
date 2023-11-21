@@ -1,11 +1,12 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const userRouter = require('./routes/user.route.js');
-const authRouter = require('./routes/auth.route.js');
-const listingRouter = require('./routes/listing.route.js');
-const cookieParser = require('cookie-parser');
-const path = require('path');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import userRouter from './routes/user.route.js';
+import authRouter from './routes/auth.route.js';
+import listingRouter from './routes/listing.route.js';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ mongoose
     console.log(err);
   });
 
-const __dirname = path.resolve();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 app.use(express.json());
