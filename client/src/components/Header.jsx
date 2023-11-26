@@ -32,8 +32,8 @@ const Header = () => {
       <Link to='/'>
 
       <span className='text-blue-500'>Rental</span>
-<span className='text-black-400'>Hub</span>
-
+<span className='text-green-400'>2</span>
+<span className='text-black-400'>Review</span>
 
         </Link>
       </h1>
