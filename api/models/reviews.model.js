@@ -7,10 +7,7 @@ const reviewSchema = new mongoose.Schema(
         type: String,
         required: true
       },
-      address: {
-        type: String,
-        required: true
-      }
+      
     },
     ratings: {
       healthAndSafety: Number,

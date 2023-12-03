@@ -66,22 +66,30 @@ const PostReview = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const reviewData = review
-   console.log("data",reviewData)
+    const reviewData = review;
+   
     try {
-      const response = await axios.post("http://example.com/api/reviews", reviewData);
+      const res = await fetch('/api/review/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...reviewData,
+         
+        }),
+      });
+      const data = await res.json();
+    console.log("data sent", data)
+      if (data.success === false) {
+        setError(data.message);
+      }
       
- 
-      console.log('Review submitted successfully:', response.data);
-      
-      // Additional success handling (e.g., showing a success message, clearing the form, etc.)
     } catch (error) {
-      // Handle any errors from the POST request
-      console.error('Error submitting review:', error);
-      // Additional error handling (e.g., showing an error message)
+      setError(error.message);
     }
-  };
-
+    
+  }
   // This is a placeholder for rating inputs, replace with your actual rating input components
   const renderRatingInput = (name) => {
     return (
