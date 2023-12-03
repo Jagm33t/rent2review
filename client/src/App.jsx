@@ -10,7 +10,8 @@ import CreateListing from './pages/CreateListing';
 import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
-import Review from './pages/Review';
+import ReadReview from './pages/ReadReview';
+import PostReview from './pages/PostReview';
 
 
 function App() {
@@ -34,7 +35,8 @@ function App() {
             element={<UpdateListing />}
           />
         </Route>
-        <Route path='/review' element={<Review />} />
+        <Route path='/readreview' element={<ReadReview />} />
+        <Route path='/postreview' element={<PostReview />} />
       </Routes>
     </BrowserRouter>
   )

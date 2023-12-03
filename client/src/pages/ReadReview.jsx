@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Review = () => {
+const ReadReview = () => {
   return (
     <div className="bg-white p-6 shadow rounded-lg my-6">
       <div className="mb-6">
@@ -41,4 +41,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default ReadReview;
