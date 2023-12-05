@@ -190,15 +190,6 @@ const PostReview = () => {
             required
           />
         </div>
-        <div className="rating rating-lg">
-          <p className="text-gray-700 text-sm font-bold mb-2">Health and Safety Rating</p>
-          {renderRatingInput('healthAndSafety')}
-        </div>
-
-        <div className="mb-4">
-          <p className="text-gray-700 text-sm font-bold mb-2">Health and Safety Rating</p>
-          {renderRatingInput('healthAndSafety')}
-        </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reviewText">
