@@ -7,8 +7,23 @@ const reviewSchema = new mongoose.Schema(
         type: String,
         required: true
       },
-      
-    },
+      state: {
+        type: String,
+        required: true
+      },
+      country: {
+        type: String,
+        required: true
+      },
+      city: {
+        type: String,
+        required: true
+      },
+      zip: {
+        type: String,
+        required: true
+      }
+    }, // Corrected: Added closing bracket for the property object
     ratings: {
       healthAndSafety: Number,
       respect: Number,
@@ -40,7 +55,6 @@ const reviewSchema = new mongoose.Schema(
       type: Date,
       default: Date.now
     },
-  
   },
   { timestamps: true }
 );
