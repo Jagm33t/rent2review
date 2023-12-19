@@ -41,27 +41,43 @@ const PostReview = () => {
     if (name in review.property) {
       setReview({ 
         ...review, 
-        property: {
-          ...review.property,
-          [name]: value
-        }
+        property: { ...review.property, [name]: value }
       });
     } else if (name in review.ratings) {
       setReview({ 
         ...review, 
-        ratings: {
-          ...review.ratings,
-          [name]: value
-        }
+        ratings: { ...review.ratings, [name]: parseInt(value, 10) }
       });
     } else {
-      setReview({
-        ...review,
-        [name]: value
-      });
+      setReview({ ...review, [name]: value });
     }
   };
-  
+  const renderRatingInput = (category) => (
+    <div className="rating mb-4 flex items-center">
+      {[1, 2, 3, 4, 5].map((num) => (
+        <React.Fragment key={num}>
+          <input
+            className="hidden"
+            value={num}
+            name={category}
+            id={`${category}${num}`}
+            type="radio"
+            onChange={handleInputChange}
+            checked={review.ratings[category] === num}
+          />
+          <label
+            className={`ms-1 cursor-pointer ${review.ratings[category] >= num ? 'text-yellow-300' : 'text-gray-300 dark:text-gray-500'}`}
+            title={`${num} stars`}
+            htmlFor={`${category}${num}`}
+          >
+            <svg width="20" height="20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+          </label>
+        </React.Fragment>
+      ))}
+    </div>
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,9 +96,12 @@ const PostReview = () => {
         }),
       });
       const data = await res.json();
+      alert('Review Sent, Thank You');
     console.log("data sent", data)
       if (data.success === false) {
         setError(data.message);
+      
+        
       }
       
     } catch (error) {
@@ -90,27 +109,10 @@ const PostReview = () => {
     }
     
   }
-  // This is a placeholder for rating inputs, replace with your actual rating input components
-  const renderRatingInput = (name) => {
-    return (
-      <div className="flex items-center">
-        {[1, 2, 3, 4, 5].map((number) => (
-          <label key={number} className="inline-flex items-center">
-            <input
-              type="radio"
-              className="form-radio"
-              name={name}
-              value={number}
-              checked={review.ratings[name] === number}
-              onChange={handleInputChange}
-            />
-            <span className="ml-1 text-sm">{number}</span>
-          </label>
-        ))}
-      </div>
-    );
-  };
+
+ 
   return (
+    
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-6">Submit Your Property Review</h1>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-6 rounded shadow">
@@ -190,7 +192,13 @@ const PostReview = () => {
             required
           />
         </div>
-
+        
+        {Object.keys(review.ratings).map((category) => (
+        <div key={category}>
+          <label className="block text-gray-700 text-sm font-bold mb-2">{category}</label>
+          {renderRatingInput(category)}
+        </div>
+      ))}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reviewText">
             Review Text
