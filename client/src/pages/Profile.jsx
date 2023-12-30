@@ -123,7 +123,7 @@ export default function Profile() {
         dispatch(deleteUserFailure(data.message));
         return;
       }
-      dispatch(deleteUserSuccess(data));
+      dispatch(deleteUserSuccess(null));
       navigate('/signin')
     } catch (error) {
       dispatch(deleteUserFailure(data.message));
