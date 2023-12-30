@@ -13,24 +13,16 @@ const PostReview = () => {
     ratings: {
       healthAndSafety: 0,
       respect: 0,
+      depositReturnChances: 0,
       tenantPrivacy: 0,
       repair: 0,
       rentalStability: 0,
       overallCleanliness: 0,
       noiseLevel: 0,
       maintenanceResponse: 0,
-      securityAndSafety: 0,
+      security: 0,
       amenities: 0,
-      neighborhoodAndLocation: 0,
       managementResponsiveness: 0,
-      pestControl: 0,
-      valueForMoney: 0,
-      leaseFlexibility: 0,
-      utilityServices: 0,
-      communityAndSocialEnvironment: 0,
-      ecoFriendliness: 0,
-      interiorCondition: 0,
-      exteriorAndGrounds: 0,
     },
     reviewText: '',
     date: new Date(),
@@ -97,10 +89,40 @@ const PostReview = () => {
       });
       const data = await res.json();
       alert('Review Sent, Thank You');
+      
+      setReview({
+        property: {
+          name: '',
+          country: '',
+          city:'',
+          state:'',
+          zip:'',
+        },
+        ratings: {
+          // reset all ratings to 0 or initial values
+        },
+        reviewText: '',
+        date: new Date(),
+      });
+      
     console.log("data sent", data)
       if (data.success === false) {
         setError(data.message);
-      
+      setReview({
+  property: {
+    name: '',
+    country: '',
+    city:'',
+    state:'',
+    zip:'',
+  },
+  ratings: {
+    // reset all ratings to 0 or initial values
+  },
+  reviewText: '',
+  date: new Date(),
+});
+
         
       }
       
