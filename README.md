@@ -4,10 +4,13 @@ Rental2Review is a full-stack MERN (MongoDB, Express, React, Node.js) web applic
 
 ## Features
 
-- User registration and authentication with Google
-- JWT token-based authentication for secure access
-- Browse and review rental and for-sale listings
-- Post reviews for landlords
+🏡 Real-world CRUD Operations: Create, read, update, and delete property listings using MongoDB.
+
+🔑 Advanced Authentication: Implement JWT, Firebase, and Google OAuth for secure and seamless user access.
+
+🚀 Advanced Search Functionality: Implement cutting-edge search features to help users find what they're looking for.
+
+💡 User-friendly Features: Enhance the user experience with image uploads, property listing management, and more.
 
 
 ## Technologies Used
