@@ -31,9 +31,9 @@ const Header = () => {
       <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
       <Link to='/'>
 
-      <span className='text-blue-500'>Rental</span>
+      <span className='text-blue-500'>Tenant</span>
 <span className='text-green-400'>2</span>
-<span className='text-black-400'>Review</span>
+<span className='text-black-400'>Landlord</span>
 
         </Link>
       </h1>

@@ -12,6 +12,7 @@ import Listing from './pages/Listing';
 import Search from './pages/Search';
 import ReadReview from './pages/ReadReview';
 import PostReview from './pages/PostReview';
+import SearchReview from './pages/SearchReview';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
        <Route path='/signin' element={<SignIn />} />
        <Route path='/about' element={<About />} />
        <Route path='/search' element={<Search />} />
+       <Route path='/searchreview' element={<SearchReview />} />
        <Route path='/signup' element={<SignUp />} />
        <Route path='/listing/:listingId' element={<Listing />} />
        <Route element={<PrivateRoute />} >
