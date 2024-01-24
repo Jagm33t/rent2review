@@ -3,5 +3,14 @@
 @tailwind utilities;
 
 body{
-  background-color: rgb(255, 255, 255);
+  background-color: white;
+}
+.bg-custom-blue {
+  background-color: #3184ca;
+}
+.text-custom-blue{
+  color: #3184ca;
+}
+.text-custom-grey{
+  color:#747d8d;
 }

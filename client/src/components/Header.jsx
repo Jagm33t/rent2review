@@ -31,31 +31,35 @@ const Header = () => {
       <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
       <Link to='/'>
 
-      <span className='text-blue-500'>Tenant</span>
-<span className='text-green-400'>2</span>
+      <span className='text-custom-blue'>Tenant</span>
+<span className='text-green-500'>2</span>
 <span className='text-black-400'>Landlord</span>
 
         </Link>
       </h1>
-      <form onSubmit={handleSubmit}  className='bg-slate-100 p-3 rounded-lg flex items-center'>
+      {/* <form onSubmit={handleSubmit}  className='bg-slate-100 p-3 rounded-lg flex items-center'>
         <input type="text" placeholder='Search...' className='bg-transparent focus:outline-none w-24 sm:w-64'
         value={searchTerm}
         onChange={(e)=> setSearchTerm(e.target.value)}
         />
         <FaSearch className='text-slate-600'/>
-      </form>
+      </form> */}
       <ul className='flex gap-4'>
+      <Link to='/choose'>
+        <li className=' text-slate-700 hover:underline'>Submit Review</li>
+        </Link>
       <Link to='/'>
-        <li className='hidden sm:inline text-slate-700 hover:underline'>Home</li>
+        <li className=' text-slate-700 hover:underline'>Home</li>
         </Link>
         <Link to='/about'>
         <li className='hidden sm:inline text-slate-700 hover:underline'>About</li>
         </Link>
-        <Link to='/profile'>
+        {/* <Link to='/profile'>
         {currentUser ?(
        <img className='rounded-full h-7 w-7 object-cover' src={currentUser.avatar} alt="profile" />
         ) : (<li  className='text-slate-700 hover:underline'>Sign in</li>)}
-        </Link>
+        </Link> */}
+        
       </ul>
       </div>
     </header>

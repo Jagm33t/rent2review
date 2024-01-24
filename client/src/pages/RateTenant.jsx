@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState,useEffect } from 'react';
 
-const PostReview = () => {
+// import axios from 'axios';
+import { Country, State, City } from 'country-state-city';
+
+
+
+const RateTenant = () => {
+  const [errorMessage, setErrorMessage] = useState('');
+
   const [review, setReview] = useState({
     property: {
       name: '',
@@ -27,18 +33,58 @@ const PostReview = () => {
     reviewText: '',
     date: new Date(),
   });
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
 
+  function validatePostalCode(postalCode, countryCode) {
+    let regex;
+    switch (countryCode) {
+      case 'US':
+        regex = /^\d{5}(-\d{4})?$/;
+        break;
+      case 'CA':
+        regex = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
+        break;
+      default:
+        return false;
+    }
+    return regex.test(postalCode);
+  }
+  
+  useEffect(() => {
+    const allCountries = Country.getAllCountries();
+    const filteredCountries = allCountries.filter(country => 
+      country.isoCode === 'CA' || country.isoCode === 'US'
+    );
+    setCountries(filteredCountries);
+  }, []);
+  
+  
+
+  const handleCountryChange = (e) => {
+    const countryId = e.target.value;
+    setStates(State.getStatesOfCountry(countryId));
+    setCities([]); // Reset cities when country changes
+    handleInputChange(e);
+  };
+
+  const handleStateChange = (e) => {
+    const stateId = e.target.value;
+    setCities(City.getCitiesOfState(review.property.country, stateId));
+    handleInputChange(e);
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name in review.property) {
-      setReview({ 
-        ...review, 
-        property: { ...review.property, [name]: value }
+      setReview({
+        ...review,
+        property: { ...review.property, [name]: value },
       });
     } else if (name in review.ratings) {
-      setReview({ 
-        ...review, 
-        ratings: { ...review.ratings, [name]: parseInt(value, 10) }
+      setReview({
+        ...review,
+        ratings: { ...review.ratings, [name]: parseInt(value, 10) },
       });
     } else {
       setReview({ ...review, [name]: value });
@@ -73,7 +119,12 @@ const PostReview = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  const isPostalValid = validatePostalCode(review.property.zip, review.property.country);
 
+  if (!isPostalValid) {
+    setErrorMessage('Invalid postal code for the selected country.');
+    return;
+  }
     const reviewData = review;
    
     try {
@@ -129,18 +180,18 @@ const PostReview = () => {
     } catch (error) {
       setError(error.message);
     }
-    
+    setErrorMessage('');
   }
 
  
   return (
     
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-6">Submit Your Property Review</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">Submit Review</h1>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-6 rounded shadow">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-          Landlord Name (or Property Management Company) - No Addresses
+          Tenant Name  - No Addresses
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -154,66 +205,91 @@ const PostReview = () => {
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="propertyAddress">
-          Country
+       {/* Country Dropdown */}
+       <div className="mb-4">
+          <label htmlFor="country" className="block text-gray-700 text-sm font-bold mb-2">
+            Country
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          <select
             id="country"
-            type="text"
             name="country"
-            placeholder="Enter  country"
             value={review.property.country}
-            onChange={handleInputChange}
+            onChange={handleCountryChange}
+            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
-          />
+          >
+            <option value="">Select Country</option>
+            {countries.map((country) => (
+              <option key={country.isoCode} value={country.isoCode}>
+                {country.name}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="propertyAddress">
-          City
+     {/* State Dropdown */}
+     <div className="mb-4">
+          <label htmlFor="state" className="block text-gray-700 text-sm font-bold mb-2">
+            State/Province
           </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          <select
+            id="state"
+            name="state"
+            value={review.property.state}
+            onChange={handleStateChange}
+            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          >
+            <option value="">Select State/Province</option>
+            {states.map((state) => (
+              <option key={state.isoCode} value={state.isoCode}>
+                {state.name}
+              </option>
+            ))}
+          </select>
+        </div>
+   {/* City Dropdown */}
+   <div className="mb-4">
+          <label htmlFor="city" className="block text-gray-700 text-sm font-bold mb-2">
+            City
+          </label>
+          <select
             id="city"
-            type="text"
             name="city"
-            placeholder="Enter City"
             value={review.property.city}
             onChange={handleInputChange}
+            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="propertyAddress">
-          State/Province
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="state"
-            type="text"
-            name="state"
-            placeholder="Enter State/Province"
-            value={review.property.state}
-            onChange={handleInputChange}
-            required
-          />
+          >
+            <option value="">Select City</option>
+            {cities.map((city) => (
+              <option key={city.name} value={city.name}>
+                {city.name}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="propertyAddress">
          ZIP/Postal Code
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border-red-950 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="zip"
             type="text"
             name="zip"
             placeholder="Enter ZIP/Postal Code"
             value={review.property.zip}
             onChange={handleInputChange}
+            style={{ borderColor: 'red' }}
             required
           />
+           {errorMessage && (
+    <div className="text-red-500 text-sm mb-2">
+      {errorMessage}
+    </div>
+  )}
         </div>
+       
         
         {Object.keys(review.ratings).map((category) => (
         <div key={category}>
@@ -247,4 +323,4 @@ const PostReview = () => {
   );
 };
 
-export default PostReview;
+export default RateTenant;
