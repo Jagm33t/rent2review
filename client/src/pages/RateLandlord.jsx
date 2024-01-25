@@ -66,7 +66,7 @@ const [checkboxStates, setCheckboxStates] = useState({
   useEffect(() => {
     const allCountries = Country.getAllCountries();
     const filteredCountries = allCountries.filter(country => 
-      country.isoCode === 'CANADA' || country.isoCode === 'US'
+      country.isoCode === 'CA' || country.isoCode === 'US'
     );
     setCountries(filteredCountries);
   }, []);
