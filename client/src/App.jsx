@@ -16,6 +16,8 @@ import ReadReview from './pages/ReadReview';
 import ChooseSubmit from './pages/ChooseSubmit';
 import RateLandlord from './pages/RateLandlord';
 import RateTenant from './pages/RateTenant';
+import ReadTenantReview from './pages/ReadTenantReviews';
+import ChooseRead from './pages/ChooseRead';
 
 
 function App() {
@@ -29,7 +31,8 @@ function App() {
        {/* <Route path='/signin' element={<SignIn />} /> */}
        <Route path='/about' element={<About />} />
        {/* <Route path='/search' element={<Search />} /> */}
-       <Route path='/choose' element={<ChooseSubmit />} />
+       <Route path='/choosesubmit' element={<ChooseSubmit />} />
+       <Route path='/chooseread' element={<ChooseRead />} />
        {/* <Route path='/signup' element={<SignUp />} /> */}
        {/* <Route path='/listing/:listingId' element={<Listing />} /> */}
        {/* <Route element={<PrivateRoute />} > */}
@@ -40,7 +43,8 @@ function App() {
             element={<UpdateListing />}
           />
         </Route> */}
-        <Route path='/readreview' element={<ReadReview />} />
+        <Route path='/readlandlordreview' element={<ReadReview />} />
+        <Route path='/readtenantreview' element={<ReadTenantReview />} />
         <Route path='/ratelandlord' element={<RateLandlord />} />
         <Route path='/ratetenant' element={<RateTenant />} />
       </Routes>

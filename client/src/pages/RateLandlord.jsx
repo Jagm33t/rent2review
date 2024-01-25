@@ -33,18 +33,13 @@ const [checkboxStates, setCheckboxStates] = useState({
       zip:'',
     },
     ratings: {
-      healthAndSafety: 0,
-      respect: 0,
-      depositReturnChances: 0,
+      maintenanceRating: 0,
+      communicationRating: 0,
+      rentFairness: 0,
       tenantPrivacy: 0,
-      repair: 0,
+      propertyCondition: 0,
       rentalStability: 0,
-      overallCleanliness: 0,
-      noiseLevel: 0,
-      maintenanceResponse: 0,
-      security: 0,
-      amenities: 0,
-      managementResponsiveness: 0,
+      
     },
     reviewText: '',
     date: new Date(),
@@ -71,7 +66,7 @@ const [checkboxStates, setCheckboxStates] = useState({
   useEffect(() => {
     const allCountries = Country.getAllCountries();
     const filteredCountries = allCountries.filter(country => 
-      country.isoCode === 'CA' || country.isoCode === 'US'
+      country.isoCode === 'CANADA' || country.isoCode === 'US'
     );
     setCountries(filteredCountries);
   }, []);
@@ -213,7 +208,21 @@ const [checkboxStates, setCheckboxStates] = useState({
     });
   }
 
- 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  const categoryDescriptions = {
+    maintenanceRating: " Landlords are legally obligated to maintain essential property services, ensuring safety and habitability",
+    communicationRating: "Effective communication is key, involving prompt and clear responses to tenant inquiries and issues",
+    rentFairness: "This involves considering whether the rent is fair for the location, size, and amenities of the property, and the justification behind any rent increases.",
+    tenantPrivacy: "Landlords must respect tenants' privacy and legal rights, ensuring appropriate property access.",
+    propertyCondition:"Property maintenance includes ensuring cleanliness, structural soundness, and the provision of advertised amenities."   ,
+    rentalStability: "Rate the consistency and fairness of the rental agreement terms."
+    
+    
+    // Add more categories and descriptions as needed
+  };
+  
   return (
     
     <div className="container mx-100% p-4">
@@ -320,13 +329,18 @@ const [checkboxStates, setCheckboxStates] = useState({
   )}
         </div>
        
-        
         {Object.keys(review.ratings).map((category) => (
-        <div key={category}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">{category}</label>
-          {renderRatingInput(category)}
-        </div>
-      ))}
+  <div key={category}>
+    <label className="block text-gray-700 text-sm font-bold mb-2">
+      {capitalizeFirstLetter(category)}
+    </label>
+    <p className="text-gray-600 text-sm mb-2">
+      {categoryDescriptions[category]}
+    </p>
+    {renderRatingInput(category)}
+  </div>
+))}
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reviewText">
             Review Text
@@ -342,7 +356,7 @@ const [checkboxStates, setCheckboxStates] = useState({
           />
         </div>
         <div className="mb-4">
-        <div>
+        <div className='pt-2'>
           <input
             type="checkbox"
             id="publicReview"
@@ -350,11 +364,11 @@ const [checkboxStates, setCheckboxStates] = useState({
             checked={checkboxStates.publicReview}
             onChange={handleCheckboxChange}
           />
-          <label htmlFor="publicReview" className="ml-2">
+          <label htmlFor="publicReview" className="text-gray-800 text-sm mb-2 ml-2 ">
           I acknowledge that my review posted on Tenant 2 Landlord will be publicly accessible and may be seen by anyone, including the landlord I am reviewing
           </label>
         </div>
-        <div>
+        <div className='pt-2'>
           <input
             type="checkbox"
             id="reviewPolicy"
@@ -362,11 +376,11 @@ const [checkboxStates, setCheckboxStates] = useState({
             checked={checkboxStates.reviewPolicy}
             onChange={handleCheckboxChange}
           />
-          <label htmlFor="reviewPolicy" className="ml-2">
+          <label htmlFor="reviewPolicy" className="text-gray-800 text-sm mb-2 ml-2">
           I am aware that once my review is submitted on Tenant 2 Landlord  it cannot be removed unless it contravenes the policies of Rate The Landlord. It is also recommended by Rate The Landlord to submit reviews after the completion of my rental period
           </label>
         </div>
-        <div>
+        <div className='pt-2'>
           <input
             type="checkbox"
             id="noTakeDown"
@@ -374,7 +388,7 @@ const [checkboxStates, setCheckboxStates] = useState({
             checked={checkboxStates.noTakeDown}
             onChange={handleCheckboxChange}
           />
-          <label htmlFor="noTakeDown" className="ml-2">
+          <label htmlFor="noTakeDown" className="text-gray-800 text-sm mb-2 ml-2">
           I recognize that Tenant 2 Landlord bears no liability for any repercussions that might arise from my submitted review.
           </label>
         </div>

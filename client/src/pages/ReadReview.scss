@@ -1,0 +1,122 @@
+// Define some common colors and sizes
+$blue-500: #4299e1;
+$gray-300: #d1d5db;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-900: #1a202c;
+$white: #ffffff;
+$black-900: #111827;
+
+.container {
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.read-container{
+  @media (min-width: 768px) { // md breakpoint
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  width: 100%;
+
+  @media (min-width: 640px) { // sm breakpoint
+    width: 75%;
+  }
+
+  @media (min-width: 768px) { // md breakpoint
+    width: 66.67%;
+  }
+
+  @media (min-width: 1024px) { // lg and xl breakpoint
+    width: 33.33%;
+  }
+}
+
+.input-field {
+  border: 1px solid $gray-300;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $blue-500;
+    border-color: $blue-500;
+  }
+}
+
+
+
+.review-card {
+  background-color: $white;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  
+
+  
+
+  .review-heading {
+    margin-top: 1.5rem;
+    font-size: 1.25rem; // 2xl font size
+    font-weight: bold;
+    color: $gray-900;
+  }
+
+  .review-subtext {
+    color: $gray-600;
+    margin-top: 0.5rem;
+    
+  }
+.review-address{
+  display: flex;
+  flex-direction: column;
+}
+  .review-detail {
+    color: $gray-700;
+    margin-top: 0.5rem;
+  }
+
+  .ratings-grid {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+  }
+}
+.review-card-sub{
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 768px) { // md breakpoint
+  
+  }
+
+  @media (min-width: 1024px) { // lg and xl breakpoint
+  
+  }
+
+} 
+.review-card-first{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.review-rating{
+  margin-right: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.review-written{
+  padding-top: 1rem;
+  font-size: 2rem;
+  color: #4299e1;
+}

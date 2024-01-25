@@ -45,7 +45,7 @@ const Header = () => {
         <FaSearch className='text-slate-600'/>
       </form> */}
       <ul className='flex gap-4'>
-      <Link to='/choose'>
+      <Link to='/choosesubmit'>
         <li className=' text-slate-700 hover:underline'>Submit Review</li>
         </Link>
       <Link to='/'>

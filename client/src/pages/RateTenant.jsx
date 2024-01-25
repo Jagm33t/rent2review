@@ -7,6 +7,22 @@ import { Country, State, City } from 'country-state-city';
 
 const RateTenant = () => {
   const [errorMessage, setErrorMessage] = useState('');
+const[radioErrorMessage,setRadioErrorMessage]  = useState('');
+// State for checkbox validation
+const [checkboxStates, setCheckboxStates] = useState({
+  publicReview: false,
+  reviewPolicy: false,
+  noTakeDown: false
+});
+
+ // Handle change for checkboxes
+ const handleCheckboxChange = (e) => {
+  setCheckboxStates({
+    ...checkboxStates,
+    [e.target.name]: e.target.checked,
+  });
+};
+
 
   const [review, setReview] = useState({
     property: {
@@ -16,19 +32,12 @@ const RateTenant = () => {
       state:'',
       zip:'',
     },
-    ratings: {
-      healthAndSafety: 0,
-      respect: 0,
-      depositReturnChances: 0,
-      tenantPrivacy: 0,
-      repair: 0,
-      rentalStability: 0,
-      overallCleanliness: 0,
-      noiseLevel: 0,
-      maintenanceResponse: 0,
-      security: 0,
-      amenities: 0,
-      managementResponsiveness: 0,
+    ratings : {
+      paymentTimeliness: 0,
+      propertyCare: 0,
+      leaseCompliance: 0,
+      communication: 0,
+      neighborRelations: 0
     },
     reviewText: '',
     date: new Date(),
@@ -60,7 +69,7 @@ const RateTenant = () => {
     setCountries(filteredCountries);
   }, []);
   
-  
+
 
   const handleCountryChange = (e) => {
     const countryId = e.target.value;
@@ -119,6 +128,13 @@ const RateTenant = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+      // Check if all checkboxes are checked
+      if (!Object.values(checkboxStates).every(value => value)) {
+        setRadioErrorMessage('Please agree to all terms before submitting your review.');
+        return;
+      }
+
   const isPostalValid = validatePostalCode(review.property.zip, review.property.country);
 
   if (!isPostalValid) {
@@ -128,7 +144,7 @@ const RateTenant = () => {
     const reviewData = review;
    
     try {
-      const res = await fetch('/api/review/create', {
+      const res = await fetch('/api/review/tenant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -181,13 +197,31 @@ const RateTenant = () => {
       setError(error.message);
     }
     setErrorMessage('');
+    setRadioErrorMessage('');
+    // Reset checkboxes state after successful form submission
+    setCheckboxStates({
+      publicReview: false,
+      reviewPolicy: false,
+      noTakeDown: false
+    });
   }
 
- 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  const categoryDescriptions = {
+    paymentTimeliness: "Evaluates if the tenant consistently pays rent on time.",
+    propertyCare: "Assesses how well the tenant maintains the property's condition.",
+    leaseCompliance: "Reviews the tenant's adherence to lease terms and conditions.",
+    communication: "Rates the tenant's communication effectiveness and responsiveness.",
+    neighborRelations: "Considers the tenant's behavior with neighbors and impact on community."
+  };
+  
+  
   return (
     
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-6">Submit Review</h1>
+    <div className="container mx-100% p-4">
+      <h1 className="text-2xl font-bold text-center mb-6">Submit Tenant Review</h1>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white p-6 rounded shadow">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -198,7 +232,7 @@ const RateTenant = () => {
             id="name"
             type="text"
             name="name"
-            placeholder="Enter property name"
+            placeholder="Enter tenant name"
             value={review.property.name}
             onChange={handleInputChange}
             required
@@ -270,7 +304,7 @@ const RateTenant = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="propertyAddress">
-         ZIP/Postal Code
+         Last known ZIP/Postal Code
           </label>
           <input
           className="shadow appearance-none border-red-950 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -290,13 +324,18 @@ const RateTenant = () => {
   )}
         </div>
        
-        
         {Object.keys(review.ratings).map((category) => (
-        <div key={category}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">{category}</label>
-          {renderRatingInput(category)}
-        </div>
-      ))}
+  <div key={category}>
+    <label className="block text-gray-700 text-sm font-bold mb-2">
+      {capitalizeFirstLetter(category)}
+    </label>
+    <p className="text-gray-600 text-sm mb-2">
+      {categoryDescriptions[category]}
+    </p>
+    {renderRatingInput(category)}
+  </div>
+))}
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="reviewText">
             Review Text
@@ -310,6 +349,49 @@ const RateTenant = () => {
             onChange={handleInputChange}
             required
           />
+        </div>
+        <div className="mb-4">
+        <div className='pt-2'>
+          <input
+            type="checkbox"
+            id="publicReview"
+            name="publicReview"
+            checked={checkboxStates.publicReview}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="publicReview" className="text-gray-800 text-sm mb-2 ml-2 ">
+          I acknowledge that my review posted on Tenant 2 Landlord will be publicly accessible and may be seen by anyone, including the Tenant, I am reviewing
+          </label>
+        </div>
+        <div className='pt-2'>
+          <input
+            type="checkbox"
+            id="reviewPolicy"
+            name="reviewPolicy"
+            checked={checkboxStates.reviewPolicy}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="reviewPolicy" className="text-gray-800 text-sm mb-2 ml-2">
+          I am aware that once my review is submitted on Tenant 2 Landlord  it cannot be removed unless it contravenes the policies of Tenant 2 Landlord . It is also recommended by Tenant 2 Landlord  to submit reviews after the completion of my rental period
+          </label>
+        </div>
+        <div className='pt-2'>
+          <input
+            type="checkbox"
+            id="noTakeDown"
+            name="noTakeDown"
+            checked={checkboxStates.noTakeDown}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="noTakeDown" className="text-gray-800 text-sm mb-2 ml-2">
+          I recognize that Tenant 2 Landlord bears no liability for any repercussions that might arise from my submitted review.
+          </label>
+        </div>
+      {radioErrorMessage && (
+    <div className="text-red-500 text-sm mb-2">
+      {radioErrorMessage}
+    </div>
+  )}
         </div>
 
         <button

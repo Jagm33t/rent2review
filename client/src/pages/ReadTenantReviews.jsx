@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import "./ReadReview.scss";
 
-const ReadReview = () => {
-  const [allReviews, setAllReviews] = useState([]);
+const ReadTenantReview = () => {
+  const [allTenantReviews, setAllTenantReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
@@ -21,10 +21,10 @@ const ReadReview = () => {
     const fetchReviews = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/review/read`);
+        const res = await fetch(`/api/review/readtenant`);
         const data = await res.json();
         if (Array.isArray(data)) {
-          setAllReviews(data);
+          setAllTenantReviews(data);
           setError(false);
         } else {
           setError(true);
@@ -37,6 +37,7 @@ const ReadReview = () => {
     };
     fetchReviews();
   }, []);
+
 
   // Handle input change
   const handleInputChange = (event) => {
@@ -59,7 +60,7 @@ const ReadReview = () => {
     setIsSearchActive(true);
     setLoading(false);
   };
-  const sortedReviews = [...allReviews].sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedReviews = [...allTenantReviews].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const renderStars = (rating) => {
     let stars = [];
@@ -75,7 +76,7 @@ const ReadReview = () => {
 
   return (
     <div className='read-container mx-100% p-4'>
-       <h1>Landlord's Review</h1>
+      <h1>Tenant's Review</h1>
 <form onSubmit={handleSubmit} className="form-container">
   <input
     type="text"
@@ -147,19 +148,19 @@ const ReadReview = () => {
             
               
             </div>
-
+         
             <div className="ratings-grid">
             <div className='review-rating flex flex-row '>
-                <p className="mr-1">Maintenance:</p>
-                {renderStars(review.ratings.maintenanceRating)}
+                <p className="mr-1">Payment Timeliness:</p>
+                {renderStars(review.ratings.paymentTimeliness)}
               </div>
               <div className='review-rating flex'>
-                <p className="mr-2">Communication:</p>
-                {renderStars(review.ratings.communicationRating)}
+                <p className="mr-2">PropertyCare:</p>
+                {renderStars(review.ratings.propertyCare)}
               </div>
               <div className='review-rating flex'>
-                <p className="mr-2">Rent Fairness:</p>
-                {renderStars(review.ratings.rentFairness)}
+                <p className="mr-2">Lease Compliance:</p>
+                {renderStars(review.ratings.leaseCompliance)}
               </div>
               {/* <div className='review-rating flex'>
                 <p className="mr-2">Cleanliness:</p>
@@ -170,16 +171,16 @@ const ReadReview = () => {
                 {renderStars(review.ratings.noiseLevel)}
               </div> */}
               <div className='review-rating flex'>
-                <p className="mr-2">TenantPrivacy:</p>
-                {renderStars(review.ratings.tenantPrivacy)}
+                <p className="mr-2">Communication:</p>
+                {renderStars(review.ratings.communication)}
               </div>
               <div className='review-rating flex'>
                 <p className="mr-2">Property Condition:</p>
                 {renderStars(review.ratings.propertyCondition)}
               </div>
               <div className='review-rating flex'>
-                <p className="mr-2">Rental Stability:</p>
-                {renderStars(review.ratings.rentalStability)}
+                <p className="mr-2">Neighbor Relations:</p>
+                {renderStars(review.ratings.neighborRelations)}
               </div>
               {/* <div className='review-rating flex'>
                 <p className="mr-2">Management:</p>
@@ -216,16 +217,16 @@ const ReadReview = () => {
 
             <div className="ratings-grid">
             <div className='review-rating flex flex-row '>
-                <p className="mr-1">Maintenance:</p>
-                {renderStars(review.ratings.maintenanceRating)}
+                <p className="mr-1">Payment Timeliness:</p>
+                {renderStars(review.ratings.paymentTimeliness)}
               </div>
               <div className='review-rating flex'>
-                <p className="mr-2">Communication:</p>
-                {renderStars(review.ratings.communicationRating)}
+                <p className="mr-2">PropertyCare:</p>
+                {renderStars(review.ratings.propertyCare)}
               </div>
               <div className='review-rating flex'>
-                <p className="mr-2">Rent Fairness:</p>
-                {renderStars(review.ratings.rentFairness)}
+                <p className="mr-2">Lease Compliance:</p>
+                {renderStars(review.ratings.leaseCompliance)}
               </div>
               {/* <div className='review-rating flex'>
                 <p className="mr-2">Cleanliness:</p>
@@ -236,23 +237,23 @@ const ReadReview = () => {
                 {renderStars(review.ratings.noiseLevel)}
               </div> */}
               <div className='review-rating flex'>
-                <p className="mr-2">TenantPrivacy:</p>
-                {renderStars(review.ratings.tenantPrivacy)}
+                <p className="mr-2">Communication:</p>
+                {renderStars(review.ratings.communication)}
               </div>
               <div className='review-rating flex'>
                 <p className="mr-2">Property Condition:</p>
                 {renderStars(review.ratings.propertyCondition)}
               </div>
               <div className='review-rating flex'>
-                <p className="mr-2">Rental Stability:</p>
-                {renderStars(review.ratings.rentalStability)}
+                <p className="mr-2">Neighbor Relations:</p>
+                {renderStars(review.ratings.neighborRelations)}
               </div>
               {/* <div className='review-rating flex'>
                 <p className="mr-2">Management:</p>
                 {renderStars(review.ratings.managementResponsiveness)}
               </div> */}
             
-          </div>
+            </div>
           <h2 className='review-written'>Review</h2>
             <p className="review-detail">{review.reviewText}</p>
       </div>
@@ -264,7 +265,7 @@ const ReadReview = () => {
       );
 };
 
-export default ReadReview;
+export default ReadTenantReview;
 
 
 
