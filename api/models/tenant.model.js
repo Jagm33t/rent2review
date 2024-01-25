@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const reviewSchema = new mongoose.Schema(
+const tenantSchema = new mongoose.Schema(
   {
     property: {
       name: {
@@ -25,14 +25,12 @@ const reviewSchema = new mongoose.Schema(
       }
     }, // Corrected: Added closing bracket for the property object
     ratings: {
-      maintenanceRating: Number,
-      communicationRating: Number,
-      rentFairness: Number,
-      tenantPrivacy: Number,
-      propertyCondition: Number,
-      rentalStability: Number,
-      
-     
+     //for tenant 
+     paymentTimeliness:  Number,
+      propertyCare: Number,
+      leaseCompliance: Number,
+      communication:  Number,
+      neighborRelations:  Number,
     }, 
     reviewText: {
       type: String,
@@ -46,6 +44,6 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Review = mongoose.model('Review', reviewSchema);
+const Tenant = mongoose.model('Tenant', tenantSchema);
 
-export default Review;
+export default Tenant;

@@ -1,4 +1,5 @@
 import Review from '../models/reviews.model.js';
+import Tenant from '../models/tenant.model.js';
 import  errorHandler  from '../utils/error.js';
 
 export const readReview = async (req, res, next) => {
@@ -16,6 +17,21 @@ export const readReview = async (req, res, next) => {
 
 
 }
+export const readtenant = async (req, res, next) => {
+
+  try {
+    const tenant = await Tenant.find({});
+    if (!tenant) {
+      return next(errorHandler(404, 'Tenant not found!'));
+    }
+    res.status(200).json(tenant);
+    console.log("revie", tenant)
+  } catch (error) {
+    next(error);
+  }
+
+
+}
 
 
 export const createReview = async (req, res, next) => {
@@ -23,6 +39,15 @@ export const createReview = async (req, res, next) => {
     const review = await Review.create(req.body);
     console.log(req.body)
     return res.status(201).json(review);
+  } catch (error) {
+    next(error);
+  }
+};
+export const tenantReview = async (req, res, next) => {
+  try {
+    const tenant = await Tenant.create(req.body);
+    console.log(req.body)
+    return res.status(201).json(tenant);
   } catch (error) {
     next(error);
   }
