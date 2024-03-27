@@ -1,18 +1,13 @@
 {
   "name": "locale-estate",
   "version": "1.0.0",
-  "description": "",
   "main": "api/index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon api/index.js",
-    "start": "node api/index.js",
-    "build": "npm install && npm run build --prefix client",
-    "postinstall": "npm install --prefix client && npm run build --prefix client"
+    "start": "nodemon api/index.js",
+    "build": "npm run build --prefix client",
+    "predeploy": "npm install --prefix client && npm run build --prefix client"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",

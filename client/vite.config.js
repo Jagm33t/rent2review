@@ -12,5 +12,9 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    // Adjust the chunk size warning limit (value in KB)
+    chunkSizeWarningLimit: 500, // Set limit to 500 KB
+  },
   plugins: [react()],
 })
