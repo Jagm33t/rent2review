@@ -1,4 +1,4 @@
-# Rental2Review - MERN Full-Stack Project
+# Tenant2Landlord - MERN Full-Stack Project
 
 Rental2Review is a full-stack MERN (MongoDB, Express, React, Node.js) web application that allows users to review rental and for-sale listings. The project includes features such as Google authentication, Firebase integration, JWT token-based authentication, and the ability to read and post reviews for landlords.
 
